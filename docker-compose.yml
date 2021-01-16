@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  esourcing.product:
+    image: ${DOCKER_REGISTRY-}esourcingproduct
+    build:
+      context: .
+      dockerfile: ESourcing.Product/Dockerfile

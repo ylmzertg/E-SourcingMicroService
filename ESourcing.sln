@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sourcing", "Sourcing", "{98
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{FF5AB097-536A-433F-A06A-8F3FF8B6D118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.Product", "ESourcing.Product\ESourcing.Product.csproj", "{4C256EA1-0B20-47DA-9FB9-88896453CA21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESourcing.Product", "ESourcing.Product\ESourcing.Product.csproj", "{4C256EA1-0B20-47DA-9FB9-88896453CA21}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1849FBB5-F8EE-46EF-B296-496223500129}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{4C256EA1-0B20-47DA-9FB9-88896453CA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C256EA1-0B20-47DA-9FB9-88896453CA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C256EA1-0B20-47DA-9FB9-88896453CA21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1849FBB5-F8EE-46EF-B296-496223500129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1849FBB5-F8EE-46EF-B296-496223500129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1849FBB5-F8EE-46EF-B296-496223500129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1849FBB5-F8EE-46EF-B296-496223500129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
