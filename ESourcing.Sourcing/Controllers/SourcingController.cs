@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,10 +24,10 @@ namespace ESourcing.Sourcing.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Auction>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Auction>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Auction>>> GetAuctions()
         {
-            var products = await _repository.GetAuctions();
-            return Ok(products);
+            var auctions = await _repository.GetAuctions();
+            return Ok(auctions);
         }
 
         [HttpGet("{id:length(24)}", Name = "GetAuction")]
@@ -67,7 +66,7 @@ namespace ESourcing.Sourcing.Controllers
 
         [HttpPut]
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateProduct([FromBody] Auction value)
+        public async Task<IActionResult> UpdateAuction([FromBody] Auction value)
         {
             return Ok(await _repository.Update(value));
         }

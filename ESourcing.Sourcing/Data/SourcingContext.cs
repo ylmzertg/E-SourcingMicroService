@@ -1,8 +1,7 @@
 ﻿using ESourcing.Sourcing.Data.Interfaces;
-using MongoDB.Driver;
-using System;
-using ESourcing.Sourcing.Settings;
 using ESourcing.Sourcing.Entities;
+using ESourcing.Sourcing.Settings;
+using MongoDB.Driver;
 
 namespace ESourcing.Sourcing.Data
 {
