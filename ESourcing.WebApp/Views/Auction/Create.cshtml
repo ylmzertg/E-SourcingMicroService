@@ -1,0 +1,115 @@
+﻿
+
+
+<div class="card card-primary card-outline">
+    <div class="card-body">
+        <h4>Auction Create Page Step</h4>
+        <div class="row">
+            <div class="col-5 col-sm-3">
+                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">General Info</a>
+                    <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Product Select</a>
+                    <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">Supplier Select</a>
+
+                </div>
+            </div>
+
+            <div class="col-7 col-sm-9">
+                <div class="tab-content" id="vert-tabs-tabContent">
+                    <div id="vert-tabs-home" class="text-left show active tab-pane fade card card-primary" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
+                        <div class="card-header">
+                            <h3 class="card-title">General Info Inputs</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Auction Name</label>
+                                <input type="email" class="form-control" id="exampleAuctionName" placeholder="Enter Auction Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+                        <div class="form-group">
+                            <label>Custom Select</label>
+                            <select class="custom-select">
+                                <option>Product 1</option>
+                                <option>Product 2</option>
+                                <option>Product 3</option>
+                                <option>Product 4</option>
+                                <option>Product 5</option>
+                            </select>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Selected Product</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Product</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1.</td>
+                                            <td>Product 1(Belki bu tablo olmadan Jquery ıle ınputa deger yazdırılarak'da gosterılebılır.(Aklımızda olsun)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
+                        <div class="form-group">
+                            <label>Supplier Select</label>
+                            <select class="custom-select">
+                                <option>Supplier 1</option>
+                                <option>Supplier 2</option>
+                                <option>Supplier 3</option>
+                                <option>Supplier 4</option>
+                                <option>Supplier 5</option>
+                            </select>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Selected Supplier</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Supplier Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1.</td>
+                                            <td>Supplier 1(Belki bu tablo olmadan Jquery ıle ınputa deger yazdırılarak'da gosterılebılır.(Aklımızda olsun)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
