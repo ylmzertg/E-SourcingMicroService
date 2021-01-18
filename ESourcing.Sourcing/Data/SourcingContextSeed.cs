@@ -26,22 +26,22 @@ namespace ESourcing.Sourcing.Data
                 {
                     Name = "Auction 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    CreateAt = DateTime.Now,
-                    StartAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    StartedAt = DateTime.Now
                 },
                 new Auction()
                 {
                     Name = "Auction 2",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    CreateAt = DateTime.Now,
-                    StartAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    StartedAt = DateTime.Now
                 },
                 new Auction()
                 {
                     Name = "Auction 3",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    CreateAt = DateTime.Now,
-                    StartAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    StartedAt = DateTime.Now
                 },
             };
         }

@@ -1,17 +1,17 @@
-using ESourcing.Sourcing.Data;
-using ESourcing.Sourcing.Data.Interfaces;
-using ESourcing.Sourcing.Repositories;
-using ESourcing.Sourcing.Repositories.Interfaces;
-using ESourcing.Sourcing.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ESourcing.Sourcing
+namespace ESourcing.Order
 {
     public class Startup
     {
@@ -29,18 +29,9 @@ namespace ESourcing.Sourcing
 
             #region Configuration Dependencies
 
-            services.Configure<SourcingDatabaseSettings>(Configuration.GetSection(nameof(SourcingDatabaseSettings)));
-
-            services.AddSingleton<ISourcingDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<SourcingDatabaseSettings>>().Value);
-
             #endregion
 
             #region Project Dependencies
-
-            services.AddTransient<ISourcingContext, SourcingContext>();
-            services.AddTransient<IAuctionRepository, AuctionRepository>();
-            services.AddTransient<IBidRepository, BidRepository>();
 
             #endregion
 
@@ -69,12 +60,6 @@ namespace ESourcing.Sourcing
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sourcing API V1");
             });
         }
     }
