@@ -78,5 +78,14 @@ namespace ESourcing.Sourcing.Controllers
         {
             return Ok(await _repository.Delete(id));
         }
+
+        //[HttpPost("SendBid")]
+        //[ProducesResponseType(typeof(Bid), (int)HttpStatusCode.OK)]
+        //public async Task<ActionResult<Auction>> SendBid([FromBody] Auction product)
+        //{
+        //    await _repository.Create(product);
+
+        //    return Ok("GetAuction", new { id = product.Id }, product);
+        //}
     }
 }
