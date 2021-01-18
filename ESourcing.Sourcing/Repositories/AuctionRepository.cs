@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ESourcing.Sourcing.Repositories
 {
-    public class SourcingRepository : ISourcingRepository
+    public class AuctionRepository : IAuctionRepository
     {
         private readonly ISourcingContext _context;
 
-        public SourcingRepository(ISourcingContext context)
+        public AuctionRepository(ISourcingContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

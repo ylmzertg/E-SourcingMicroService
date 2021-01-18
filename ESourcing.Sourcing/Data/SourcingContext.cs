@@ -18,5 +18,6 @@ namespace ESourcing.Sourcing.Data
         }
 
         public IMongoCollection<Auction> Auctions { get; }
+        public IMongoCollection<Bid> Bids { get; }
     }
 }

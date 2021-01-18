@@ -11,12 +11,12 @@ namespace ESourcing.Sourcing.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class SourcingController : ControllerBase
+    public class AuctionController : ControllerBase
     {
-        private readonly ISourcingRepository _repository;
-        private readonly ILogger<SourcingController> _logger;
+        private readonly IAuctionRepository _repository;
+        private readonly ILogger<AuctionController> _logger;
 
-        public SourcingController(ISourcingRepository repository, ILogger<SourcingController> logger)
+        public AuctionController(IAuctionRepository repository, ILogger<AuctionController> logger)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
