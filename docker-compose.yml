@@ -4,6 +4,9 @@ services:
   sourcingdb:
     image: mongo
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   esourcing.sourcing:
     image: ${DOCKER_REGISTRY-}esourcingsourcing
     build:

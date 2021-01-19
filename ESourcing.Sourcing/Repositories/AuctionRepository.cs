@@ -1,6 +1,10 @@
-﻿using ESourcing.Sourcing.Data.Interfaces;
+﻿using AutoMapper;
+using ESourcing.Sourcing.Data.Interfaces;
 using ESourcing.Sourcing.Entities;
 using ESourcing.Sourcing.Repositories.Interfaces;
+using EventBusRabbitMQ.Events;
+using EventBusRabbitMQ.Producer;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

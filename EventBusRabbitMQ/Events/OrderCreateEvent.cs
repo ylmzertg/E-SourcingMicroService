@@ -6,5 +6,6 @@ namespace EventBusRabbitMQ.Events
 {
     public class OrderCreateEvent : IEvent
     {
+        public string AuctionId { get; set; }
     }
 }

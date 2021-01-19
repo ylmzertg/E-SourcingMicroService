@@ -1,5 +1,9 @@
-﻿using ESourcing.Sourcing.Entities;
+﻿using AutoMapper;
+using ESourcing.Sourcing.Entities;
 using ESourcing.Sourcing.Repositories.Interfaces;
+using EventBusRabbitMQ.Common;
+using EventBusRabbitMQ.Events;
+using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,6 +19,8 @@ namespace ESourcing.Sourcing.Controllers
     {
         private readonly IAuctionRepository _repository;
         private readonly ILogger<AuctionController> _logger;
+        private readonly EventBusRabbitMQProducer _eventBus;
+        private readonly IMapper _mapper;
 
         public AuctionController(IAuctionRepository repository, ILogger<AuctionController> logger)
         {
@@ -78,13 +84,26 @@ namespace ESourcing.Sourcing.Controllers
             return Ok(await _repository.Delete(id));
         }
 
-        //[HttpPost("SendBid")]
-        //[ProducesResponseType(typeof(Bid), (int)HttpStatusCode.OK)]
-        //public async Task<ActionResult<Auction>> SendBid([FromBody] Auction product)
-        //{
-        //    await _repository.Create(product);
+        [HttpPost("{id:length(24)}")]
+        [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.Accepted)]
+        public ActionResult<Auction> CompleteAuction(string id)
+        {
+            OrderCreateEvent eventMessage = new OrderCreateEvent()
+            {
+                AuctionId = id
+            };
 
-        //    return Ok("GetAuction", new { id = product.Id }, product);
-        //}
+            try
+            {
+                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.RequestId, "Sourcing");
+                throw;
+            }
+
+            return Accepted();
+        }
     }
 }
