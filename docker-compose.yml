@@ -7,6 +7,9 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+
   esourcing.sourcing:
     image: ${DOCKER_REGISTRY-}esourcingsourcing
     build:
@@ -18,4 +21,11 @@ services:
     build:
       context: .
       dockerfile: ESourcing.Product/Dockerfile
+
+
+  esourcing.order:
+    image: ${DOCKER_REGISTRY-}esourcingorder
+    build:
+      context: .
+      dockerfile: ESourcing.Order/Dockerfile
 
