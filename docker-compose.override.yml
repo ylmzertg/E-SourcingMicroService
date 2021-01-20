@@ -17,8 +17,8 @@ services:
         - "5672:5672"
         - "15672:15672"
 
-  orderdb:
-        container_name: orderdb
+  sourcingsqldb:
+        container_name: sourcingsqldb
         ports:
             - "1433:1433"
         environment:
@@ -58,10 +58,10 @@ services:
      restart: on-failure
      environment:
          - ASPNETCORE_ENVIRONMENT=Development
-         - "ConnectionStrings:OrderConnection=Server=orderdb;Database=OrderDb;User Id=sa;Password=Odb12345678"
+         - "ConnectionStrings:OrderConnection=Server=sourcingsqldb;Database=OrderDb;User Id=sa;Password=Odb12345678"
          - "EventBus:HostName=rabbitmq"
      depends_on:
-         - orderdb
+         - sourcingsqldb
          - rabbitmq
      volumes:
          - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets

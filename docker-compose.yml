@@ -7,7 +7,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
-  orderdb:
+  sourcingsqldb:
     image: mcr.microsoft.com/mssql/server
 
   esourcing.sourcing:
