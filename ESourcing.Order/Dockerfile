@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["ESourcing.Order/ESourcing.Order.csproj", "ESourcing.Order/"]
-COPY ["../Order.Infrastructure/Ordering.Infrastructure.csproj", "../Order.Infrastructure/"]
+COPY ["Order.Infrastructure/Ordering.Infrastructure.csproj", "Order.Infrastructure/"]
 COPY ["Order.Core/Ordering.Core.csproj", "Order.Core/"]
 COPY ["Order.Application/Ordering.Application.csproj", "Order.Application/"]
 COPY ["EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
