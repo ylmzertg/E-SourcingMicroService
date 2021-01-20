@@ -22,10 +22,17 @@ namespace ESourcing.Sourcing.Controllers
         private readonly EventBusRabbitMQProducer _eventBus;
         private readonly IMapper _mapper;
 
-        public AuctionController(IAuctionRepository repository, ILogger<AuctionController> logger)
+        public AuctionController(
+            IAuctionRepository repository, 
+            EventBusRabbitMQProducer eventBus, 
+            //IMapper mapper, 
+            ILogger<AuctionController> logger)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            //_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         [HttpGet]
