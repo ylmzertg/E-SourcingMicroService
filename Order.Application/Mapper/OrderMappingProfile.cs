@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventBusRabbitMQ.Events;
 using Ordering.Application.Commands;
 using Ordering.Application.Responses;
 using Ordering.Core.Entities;
