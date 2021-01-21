@@ -28,4 +28,3 @@ services:
     build:
       context: .
       dockerfile: ESourcing.Order/Dockerfile
-
