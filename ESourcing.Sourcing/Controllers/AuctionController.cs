@@ -17,20 +17,23 @@ namespace ESourcing.Sourcing.Controllers
     [ApiController]
     public class AuctionController : ControllerBase
     {
-        private readonly IAuctionRepository _repository;
+        private readonly IAuctionRepository _auctionRepository;
+        private readonly IBidRepository _bidRepository;
         private readonly ILogger<AuctionController> _logger;
         private readonly EventBusRabbitMQProducer _eventBus;
         private readonly IMapper _mapper;
 
         public AuctionController(
-            IAuctionRepository repository, 
-            EventBusRabbitMQProducer eventBus, 
-            //IMapper mapper, 
+            IAuctionRepository auctionRepository,
+            IBidRepository bidRepository,
+            EventBusRabbitMQProducer eventBus,
+            IMapper mapper,
             ILogger<AuctionController> logger)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _auctionRepository = auctionRepository ?? throw new ArgumentNullException(nameof(auctionRepository));
+            _bidRepository = bidRepository ?? throw new ArgumentNullException(nameof(bidRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
@@ -39,7 +42,7 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(IEnumerable<Auction>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Auction>>> GetAuctions()
         {
-            var auctions = await _repository.GetAuctions();
+            var auctions = await _auctionRepository.GetAuctions();
             return Ok(auctions);
         }
 
@@ -48,7 +51,7 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Auction>> GetAuction(string id)
         {
-            var product = await _repository.GetAuction(id);
+            var product = await _auctionRepository.GetAuction(id);
 
             if (product == null)
             {
@@ -59,20 +62,11 @@ namespace ESourcing.Sourcing.Controllers
             return Ok(product);
         }
 
-        //[Route("[action]/{category}")]
-        //[HttpGet]
-        //[ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
-        //public async Task<ActionResult<IEnumerable<Auction>>> GetProductByCategory(string category)
-        //{
-        //    var product = await _repository.GetProductByCategory(category);
-        //    return Ok(product);
-        //}
-
         [HttpPost]
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.Created)]
         public async Task<ActionResult<Auction>> CreateAuction([FromBody] Auction product)
         {
-            await _repository.Create(product);
+            await _auctionRepository.Create(product);
 
             return CreatedAtRoute("GetAuction", new { id = product.Id }, product);
         }
@@ -81,24 +75,45 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateAuction([FromBody] Auction value)
         {
-            return Ok(await _repository.Update(value));
+            return Ok(await _auctionRepository.Update(value));
         }
 
         [HttpDelete("{id:length(24)}")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteAuctionById(string id)
         {
-            return Ok(await _repository.Delete(id));
+            return Ok(await _auctionRepository.Delete(id));
         }
 
         [HttpPost("{id:length(24)}")]
         [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.Accepted)]
-        public ActionResult<Auction> CompleteAuction(string id)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<Auction>> CompleteAuctionAsync(string id)
         {
-            OrderCreateEvent eventMessage = new OrderCreateEvent()
+            Auction auction = await _auctionRepository.GetAuction(id);
+            if(auction == null)
+                return NotFound();
+
+            if(auction.Status != (int)Status.Active)
             {
-                AuctionId = id
-            };
+                _logger.LogError("Auction can not completed");
+                return BadRequest();
+            }
+
+            Bid bid = await _bidRepository.GetWinnerBid(id);
+            if (bid == null)
+                return NotFound();
+
+            OrderCreateEvent eventMessage = _mapper.Map<OrderCreateEvent>(bid);
+            eventMessage.Quantity = auction.Quantity;
+
+            auction.Status = (int)Status.Closed;
+            bool updateResp = await _auctionRepository.Update(auction);
+            if(!updateResp)
+            {
+                _logger.LogError("Auction can not updated");
+                return BadRequest();
+            }
 
             try
             {

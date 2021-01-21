@@ -55,13 +55,13 @@ namespace ESourcing.Order
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
             services.AddTransient<IOrderRepository, OrderRepository>(); // we made transient this in order to resolve in mediatR when consuming Rabbit
 
-            //// Add AutoMapper
+            // Add AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
-            //// Add MediatR
+            // Add MediatR
             services.AddMediatR(typeof(OrderCreateHandler).GetTypeInfo().Assembly);
 
-            ////Domain Level Validation
+            //Domain Level Validation
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             #endregion

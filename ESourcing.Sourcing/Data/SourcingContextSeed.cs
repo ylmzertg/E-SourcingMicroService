@@ -27,21 +27,48 @@ namespace ESourcing.Sourcing.Data
                     Name = "Auction 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     CreatedAt = DateTime.Now,
-                    StartedAt = DateTime.Now
+                    StartedAt = DateTime.Now,
+                    FinishedAt = DateTime.Now.AddDays(10),
+                    ProductId = "60093337093d7352d5467341",
+                    IncludedSellers = new List<string>()
+                    {
+                        "seller1@test.com",
+                        "seller2@test.com",
+                        "seller3@test.com"
+                    },
+                    Status = (int)Status.Active
                 },
                 new Auction()
                 {
                     Name = "Auction 2",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     CreatedAt = DateTime.Now,
-                    StartedAt = DateTime.Now
+                    StartedAt = DateTime.Now,
+                    FinishedAt = DateTime.Now.AddDays(10),
+                    ProductId = "60093337093d7352d5467341",
+                    IncludedSellers = new List<string>()
+                    {
+                        "seller1@test.com",
+                        "seller2@test.com",
+                        "seller3@test.com"
+                    },
+                    Status = (int)Status.Active
                 },
                 new Auction()
                 {
                     Name = "Auction 3",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     CreatedAt = DateTime.Now,
-                    StartedAt = DateTime.Now
+                    StartedAt = DateTime.Now,
+                    FinishedAt = DateTime.Now.AddDays(10),
+                    ProductId = "60093337093d7352d5467341",
+                    IncludedSellers = new List<string>()
+                    {
+                        "seller1@test.com",
+                        "seller2@test.com",
+                        "seller3@test.com"
+                    },
+                    Status = (int)Status.Active
                 },
             };
         }

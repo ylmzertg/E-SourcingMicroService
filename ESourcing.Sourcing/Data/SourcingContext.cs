@@ -12,7 +12,8 @@ namespace ESourcing.Sourcing.Data
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            Auctions = database.GetCollection<Auction>(settings.CollectionName);
+            Auctions = database.GetCollection<Auction>("Auctions");
+            Bids = database.GetCollection<Bid>("Bids");
 
             SourcingContextSeed.SeedData(Auctions);
         }

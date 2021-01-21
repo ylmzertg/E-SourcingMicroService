@@ -1,3 +1,4 @@
+using AutoMapper;
 using ESourcing.Sourcing.Data;
 using ESourcing.Sourcing.Data.Interfaces;
 using ESourcing.Sourcing.Repositories;
@@ -44,6 +45,9 @@ namespace ESourcing.Sourcing
             services.AddTransient<ISourcingContext, SourcingContext>();
             services.AddTransient<IAuctionRepository, AuctionRepository>();
             services.AddTransient<IBidRepository, BidRepository>();
+
+            // Add AutoMapper
+            services.AddAutoMapper(typeof(Startup));
 
             #endregion
 

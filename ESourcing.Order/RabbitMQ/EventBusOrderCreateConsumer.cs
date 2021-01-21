@@ -4,6 +4,7 @@ using EventBusRabbitMQ.Common;
 using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
+using Ordering.Application.Commands;
 using Ordering.Core.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -48,11 +49,15 @@ namespace ESourcing.Order.RabbitMQ
             if (e.RoutingKey == EventBusConstants.OrderCreateQueue)
             {
                 var message = Encoding.UTF8.GetString(e.Body.Span);
-                var basketCheckoutEvent = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
+                var orderCreateEvent = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
 
-                //// EXECUTION : Call Internal Checkout Operation
-                //var command = _mapper.Map<CheckoutOrderCommand>(basketCheckoutEvent);
-                //var result = await _mediator.Send(command);
+                // EXECUTION : Call Internal Order Operation
+                var command = _mapper.Map<OrderCreateCommand>(orderCreateEvent);
+
+                command.TotalPrice = orderCreateEvent.Quantity * orderCreateEvent.Price;
+                command.UnitPrice = orderCreateEvent.Price;
+
+                var result = await _mediator.Send(command);
             }
         }
 

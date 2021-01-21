@@ -14,7 +14,7 @@ namespace ESourcing.Product.Data
 
             Products = database.GetCollection<Entites.Product>(settings.CollectionName);
 
-            //ProductContextSeed.SeedData(Products);
+            ProductContextSeed.SeedData(Products);
         }
 
         public IMongoCollection<Entites.Product> Products { get; }

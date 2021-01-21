@@ -13,12 +13,14 @@ namespace ESourcing.Sourcing.Controllers
     [ApiController]
     public class BidController : ControllerBase
     {
-        private readonly IBidRepository _repository;
+        private readonly IBidRepository _bidRepository;
         private readonly ILogger<BidController> _logger;
 
-        public BidController(IBidRepository repository, ILogger<BidController> logger)
+        public BidController(
+            IBidRepository bidRepository,
+            ILogger<BidController> logger)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _bidRepository = bidRepository ?? throw new ArgumentNullException(nameof(bidRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -26,9 +28,27 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> SendBid([FromBody] Bid bid)
         {
-            await _repository.SendBid(bid);
+            await _bidRepository.SendBid(bid);
 
             return Ok();
+        }
+
+        [HttpGet("GetBidsByAuctionId")]
+        [ProducesResponseType(typeof(List<Bid>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<Bid>>> GetBidsByAuctionId(string id)
+        {
+            List<Bid> bids = await _bidRepository.GetBidsByAuctionId(id);
+
+            return Ok(bids);
+        }
+
+        [HttpGet("GetWinnerBid")]
+        [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<Bid>>> GetWinnerBid(string id)
+        {
+            Bid bid = await _bidRepository.GetWinnerBid(id);
+
+            return Ok(bid);
         }
     }
 }

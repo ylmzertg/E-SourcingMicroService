@@ -10,7 +10,6 @@ namespace Ordering.Application.Commands
 {
     public class OrderCreateCommand : IRequest<OrderResponse>
     {
-        public string Id { get; set; }
         public string AuctionId { get; set; }
         public string SellerUserName { get; set; }
         public string ProductId { get; set; }
