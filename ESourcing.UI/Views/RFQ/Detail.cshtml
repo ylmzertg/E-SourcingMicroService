@@ -3,10 +3,51 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Quick Example</h3>
+            </div>
+            <form method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputPrice">Price</label>
+                        <input type="number" min="0" class="form-control" id="exampleInputPrice" placeholder="Enter price">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-header" style="background-color:darkgray">
+            <h3 class="card-title">Active RFQ Detail</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr style="background-color: darkgray">
+                        <th>RFQ UserName</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
 
-Bu ekranda solda text input ve button ıle fıyat uzerınden teklıf verılıcek .
-ekranın sag tarafında da degısıklık olması ıcın dıyorum ViewComponent ıle datalar lıstelenır.
-Bence daha tatlı olur.Adamsın
-Ankara donusu de burayı yapayım
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hasan Denli</td>
+                        <td>
+                            10 $
+                        </td>
+                        <td>2</td>
+                    </tr>
 
-
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
