@@ -1,12 +1,13 @@
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Ordering.Infrastructure.Data;
+using WebApp.Core.Entities;
 
 namespace ESourcing.WebApp
 {
@@ -23,6 +24,10 @@ namespace ESourcing.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<WebAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+                                                                                                                            services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser ,                                           Microsoft.AspNetCore.Identity.IdentityRole>().AddDefaultTokenProviders()
+               .AddEntityFrameworkStores<WebAppContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
