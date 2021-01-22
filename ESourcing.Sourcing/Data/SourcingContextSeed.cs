@@ -36,6 +36,7 @@ namespace ESourcing.Sourcing.Data
                         "seller2@test.com",
                         "seller3@test.com"
                     },
+                    Quantity = 5,
                     Status = (int)Status.Active
                 },
                 new Auction()
@@ -52,6 +53,7 @@ namespace ESourcing.Sourcing.Data
                         "seller2@test.com",
                         "seller3@test.com"
                     },
+                    Quantity = 5,
                     Status = (int)Status.Active
                 },
                 new Auction()
@@ -68,6 +70,7 @@ namespace ESourcing.Sourcing.Data
                         "seller2@test.com",
                         "seller3@test.com"
                     },
+                    Quantity = 5,
                     Status = (int)Status.Active
                 },
             };
