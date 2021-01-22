@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Ordering.Core.Entities.Base
 {
-    public interface IEntityBase<TId>
+    public interface IEntityBase
     {
-        TId Id { get; }
+        int Id { get; }
     }
 }

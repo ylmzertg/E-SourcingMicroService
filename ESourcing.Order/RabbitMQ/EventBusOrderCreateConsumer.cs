@@ -54,6 +54,7 @@ namespace ESourcing.Order.RabbitMQ
                 // EXECUTION : Call Internal Order Operation
                 var command = _mapper.Map<OrderCreateCommand>(orderCreateEvent);
 
+                command.CreatedAt = DateTime.Now;
                 command.TotalPrice = orderCreateEvent.Quantity * orderCreateEvent.Price;
                 command.UnitPrice = orderCreateEvent.Price;
 

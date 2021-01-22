@@ -88,7 +88,7 @@ namespace ESourcing.Sourcing.Controllers
         [HttpPost("{id:length(24)}")]
         [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<Auction>> CompleteAuctionAsync(string id)
+        public async Task<ActionResult<Auction>> CompleteAuction(string id)
         {
             Auction auction = await _auctionRepository.GetAuction(id);
             if(auction == null)
@@ -114,6 +114,29 @@ namespace ESourcing.Sourcing.Controllers
                 _logger.LogError("Auction can not updated");
                 return BadRequest();
             }
+
+            try
+            {
+                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.RequestId, "Sourcing");
+                throw;
+            }
+
+            return Accepted();
+        }
+
+        [HttpPost("TestEvent")]
+        public ActionResult<Auction> TestEvent(string id)
+        {
+            OrderCreateEvent eventMessage = new OrderCreateEvent();
+            eventMessage.AuctionId = "600a800fee404a87fb9f148e";
+            eventMessage.ProductId = "600a800fee404a87fb9f148e";
+            eventMessage.Price = 11;
+            eventMessage.Quantity = 13;
+            eventMessage.SellerUserName = "test@test.com";
 
             try
             {

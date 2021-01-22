@@ -28,13 +28,13 @@ namespace ESourcing.Sourcing.Repositories
                           .ToListAsync();
 
             bids = bids.OrderByDescending(a => a.CreatedAt)
-                                   .GroupBy(x => x.SupplierUserName)
+                                   .GroupBy(x => x.SellerUserName)
                                    .Select(a => new Bid
                                    {
                                        AuctionId = a.FirstOrDefault().AuctionId,
                                        Price = a.FirstOrDefault().Price,
                                        CreatedAt = a.FirstOrDefault().CreatedAt,
-                                       SupplierUserName = a.FirstOrDefault().SupplierUserName,
+                                       SellerUserName = a.FirstOrDefault().SellerUserName,
                                        ProductId = a.FirstOrDefault().ProductId,
                                        Id = a.FirstOrDefault().Id
                                    })

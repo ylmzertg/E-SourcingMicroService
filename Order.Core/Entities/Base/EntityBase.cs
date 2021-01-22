@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Ordering.Core.Entities.Base
 {
-    public abstract class EntityBase<TId> : IEntityBase<TId>
+    public abstract class EntityBase : IEntityBase
     {
-        public virtual TId Id { get; protected set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual int Id { get; protected set; }
 
         int? _requestedHashCode;
 
         public bool IsTransient()
         {
-            return Id.Equals(default(TId));
+            return Id.Equals(default(int));
         }
 
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is EntityBase<TId>))
+            if (obj == null || !(obj is EntityBase))
                 return false;
 
             if (ReferenceEquals(this, obj))
@@ -26,7 +28,7 @@ namespace Ordering.Core.Entities.Base
             if (GetType() != obj.GetType())
                 return false;
 
-            var item = (EntityBase<TId>)obj;
+            var item = (EntityBase)obj;
 
             if (item.IsTransient() || IsTransient())
                 return false;
@@ -47,7 +49,7 @@ namespace Ordering.Core.Entities.Base
                 return base.GetHashCode();
         }
 
-        public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)
+        public static bool operator ==(EntityBase left, EntityBase right)
         {
             if (Equals(left, null))
                 return Equals(right, null) ? true : false;
@@ -55,7 +57,7 @@ namespace Ordering.Core.Entities.Base
                 return left.Equals(right);
         }
 
-        public static bool operator !=(EntityBase<TId> left, EntityBase<TId> right)
+        public static bool operator !=(EntityBase left, EntityBase right)
         {
             return !(left == right);
         }
