@@ -38,7 +38,7 @@ namespace ESourcing.Product.Controllers
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Entites.Product), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Entites.Product>> GetAuction(string id)
+        public async Task<ActionResult<Entites.Product>> GetProduct(string id)
         {
             var product = await _repository.GetProduct(id);
 
@@ -53,7 +53,7 @@ namespace ESourcing.Product.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(Entites.Product), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult<Entites.Product>> CreateAuction([FromBody] Entites.Product product)
+        public async Task<ActionResult<Entites.Product>> CreateProduct([FromBody] Entites.Product product)
         {
             await _repository.Create(product);
 

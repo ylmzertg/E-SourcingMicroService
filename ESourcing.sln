@@ -35,11 +35,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "Order.Infrastructure\Ordering.Infrastructure.csproj", "{B4983BAC-4B57-4A46-89CD-73630A9EA89D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.UI", "ESourcing.UI\ESourcing.UI.csproj", "{DC0677AC-D0F4-4E81-B585-B87A234104A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESourcing.UI", "ESourcing.UI\ESourcing.UI.csproj", "{DC0677AC-D0F4-4E81-B585-B87A234104A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.Core", "ESourcing.Core\ESourcing.Core.csproj", "{FD0F15A5-687C-4368-9152-4B0128532D07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESourcing.Core", "ESourcing.Core\ESourcing.Core.csproj", "{FD0F15A5-687C-4368-9152-4B0128532D07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.Infrastructure", "ESourcing.Infrastructure\ESourcing.Infrastructure.csproj", "{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESourcing.Infrastructure", "ESourcing.Infrastructure\ESourcing.Infrastructure.csproj", "{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.APIGateway", "ESourcing.APIGateway\ESourcing.APIGateway.csproj", "{C57404E2-67E5-4B59-B550-F1DA15EF5ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57404E2-67E5-4B59-B550-F1DA15EF5ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57404E2-67E5-4B59-B550-F1DA15EF5ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57404E2-67E5-4B59-B550-F1DA15EF5ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57404E2-67E5-4B59-B550-F1DA15EF5ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{DC0677AC-D0F4-4E81-B585-B87A234104A5} = {2DBB6AFD-552E-4ED3-B169-D6AB8B809128}
 		{FD0F15A5-687C-4368-9152-4B0128532D07} = {2DBB6AFD-552E-4ED3-B169-D6AB8B809128}
 		{B4C8A070-6531-46AB-B5D5-5891FEA6FCCE} = {2DBB6AFD-552E-4ED3-B169-D6AB8B809128}
+		{C57404E2-67E5-4B59-B550-F1DA15EF5ADF} = {9A8F99BD-EA3F-4E0A-8D31-59A86A255385}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2585A41-FE44-4E24-916F-D497A86CAADA}
