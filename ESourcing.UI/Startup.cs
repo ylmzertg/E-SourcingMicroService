@@ -38,6 +38,18 @@ namespace ESourcing.UI
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
+
+            #region Project Dependencies
+
+            // add for httpClient factory
+            services.AddHttpClient();
+
+            // add api dependecy
+            //services.AddTransient<ICatalogApi, CatalogApi>();
+            //services.AddTransient<IBasketApi, BasketApi>();
+            //services.AddTransient<IOrderApi, OrderApi>();
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

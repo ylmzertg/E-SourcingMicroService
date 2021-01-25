@@ -25,13 +25,12 @@ namespace ESourcing.UI.ViewModel
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password Requeired")]
-        [Display(Name = "Password Name")]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public bool IsActive { get; set; }
 
-        [Required(ErrorMessage = "IsAdmin Requeired")]
         [Display(Name = "IsAdmin")]
         public bool IsAdmin { get; set; }
         public bool IsSupplier { get; set; }
