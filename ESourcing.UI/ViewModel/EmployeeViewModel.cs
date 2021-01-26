@@ -29,10 +29,11 @@ namespace ESourcing.UI.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public bool IsActive { get; set; }
+        //public bool IsActive { get; set; }
 
         [Display(Name = "IsAdmin")]
         public bool IsAdmin { get; set; }
-        public bool IsSupplier { get; set; }
+        public bool IsBuyer { get; set; }
+        public bool IsSeller { get; set; }
     }
 }

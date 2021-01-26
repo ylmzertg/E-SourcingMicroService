@@ -1,5 +1,7 @@
 using ESourcing.Core.Entities;
 using ESourcing.Infrastructure.Data;
+using ESourcing.UI.ApiExtension;
+using ESourcing.UI.ApiExtension.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -45,9 +47,10 @@ namespace ESourcing.UI
             services.AddHttpClient();
 
             // add api dependecy
-            //services.AddTransient<ICatalogApi, CatalogApi>();
-            //services.AddTransient<IBasketApi, BasketApi>();
-            //services.AddTransient<IOrderApi, OrderApi>();
+            services.AddTransient<IAuctionApi, AuctionApi>();
+            services.AddTransient<IBidApi, BidApi>();
+            services.AddTransient<IOrderApi, OrderApi>();
+            services.AddTransient<IProductApi, ProductApi>();
 
             #endregion
         }

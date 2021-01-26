@@ -75,7 +75,7 @@ namespace ESourcing.UI.Controllers
                 emp.UserName = model.UserName;
                 emp.IsAdmin = emp.IsAdmin;
                 emp.IsActive = emp.IsActive;
-                emp.IsSupplier = emp.IsSupplier;
+                //emp.IsSupplier = emp.IsSupplier;
 
                 var result = await _userManager.CreateAsync(emp, model.Password);
 
