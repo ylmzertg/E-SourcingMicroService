@@ -1,12 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ESourcing.UI.Clients;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ESourcing.UI.Controllers
 {
     public class AuctionController : Controller
     {
-        public IActionResult Index()
+        private readonly AuctionClient _auctionClient;
+
+        public AuctionController(AuctionClient auctionClient)
         {
-            return View();
+            _auctionClient = auctionClient;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var auctionList = await _auctionClient.GetAuctions();
+            if (auctionList.IsSuccess)
+                return View(auctionList.Data);
+            else
+                return View();
         }
 
         public IActionResult Create()

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<AuctionViewModel>
 @{
     ViewData["Title"] = "Auction Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,28 +16,29 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Trident</td>
-                            <td>
-                                Internet
-                                Explorer 4.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td> 4</td>
-                            <td>X</td>
-                            <td>
-                                <a asp-controller="RFQ" asp-action="Detail" class="btn btn-warning">Detail</a>
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Description
+                                </td>
+                                <td>@item.Quantity</td>
+                                <td> @item.StartedAt.ToShortDateString()</td>
+                                <td>@item.FinishedAt.ToShortDateString()</td>
+                                <td>
+                                    <a asp-controller="RFQ" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-warning">Detail</a>
+                                </td>
+                            </tr>
+                        }
 
                     </tbody>
                 </table>
