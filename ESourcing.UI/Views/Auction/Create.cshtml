@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card card-primary card-outline">
         <div class="card-body">
             <h4>Auction Create Page Step</h4>
@@ -34,16 +35,26 @@
                                     @Html.TextBoxFor(x => x.Description, new { placeholder = "Enter Auction Description", @class = "form-control" })
                                 </div>
                                 <div class="form-group">
-                                    <label>Auction Date range:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="far fa-calendar-alt"></i>
-                                            </span>
+                                    <label for="Description">Auction Quantity</label>
+                                    @Html.TextBoxFor(x => x.Quantity, new { placeholder = "Enter Quantity", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date:</label>
+                                    <div class="input-group date"  id="StartedAt" data-target-input="nearest">
+                                        <input type="text" asp-for="StartedAt" class="form-control datetimepicker-input" data-target="#StartedAt" />
+                                        <div class="input-group-append" data-target="#StartedAt" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
-                                        <input type="text" class="form-control float-right" id="reservation">
                                     </div>
-                                    <!-- /.input group -->
+                                </div>
+                                <div class="form-group">
+                                    <label>Finish Date:</label>
+                                    <div class="input-group date" id="FinishedAt" data-target-input="nearest">
+                                        <input type="text" asp-for="FinishedAt" class="form-control datetimepicker-input" data-target="#FinishedAt" />
+                                        <div class="input-group-append" data-target="#FinishedAt" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +74,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    @Html.DropDownListFor(l => l.SellerId, new SelectList(ViewBag.ProductList, "Id", "Name"), "Please Select Seller", new { @class = "custom-select form-control col-sm-6" })
+                                    @Html.DropDownListFor(l => l.SellerId, new SelectList(ViewBag.UserList, "Id", "FirstName"), "Please Select Seller", new { @class = "custom-select form-control col-sm-6" })
                                 </div>
                                 <div class="clearfix form-actions">
                                     <div class="col-md-offset-3 col-md-9">
@@ -71,9 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>

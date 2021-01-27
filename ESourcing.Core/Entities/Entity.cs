@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ESourcing.Core.Entities
 {
-    public abstract class Entity : EntityBase
+    public abstract class Entity 
     {
     }
 }

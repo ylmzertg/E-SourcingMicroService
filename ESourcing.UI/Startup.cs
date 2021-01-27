@@ -1,5 +1,9 @@
 using ESourcing.Core.Entities;
+using ESourcing.Core.Repositories;
+using ESourcing.Core.Repositories.Base;
 using ESourcing.Infrastructure.Data;
+using ESourcing.Infrastructure.Repository;
+using ESourcing.Infrastructure.Repository.Base;
 using ESourcing.UI.ApiExtension;
 using ESourcing.UI.ApiExtension.Interfaces;
 using ESourcing.UI.Clients;
@@ -42,17 +46,13 @@ namespace ESourcing.UI
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
 
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+
             #region Project Dependencies
 
             // add for httpClient factory
             services.AddHttpClient();
-
-            // add api dependecy
-            //services.AddTransient<IAuctionApi, AuctionApi>();
-            //services.AddTransient<IBidApi, BidApi>();
-            //services.AddTransient<IOrderApi, OrderApi>();
-            //services.AddTransient<IProductApi, ProductApi>();
-
             #endregion
 
             #region ClienDependencies

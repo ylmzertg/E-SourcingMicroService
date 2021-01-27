@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ESourcing.Infrastructure.Repository.Base
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public class Repository<T> : IRepository<T> where T : class, new()
     {
         protected readonly WebAppContext _dbContext;
 

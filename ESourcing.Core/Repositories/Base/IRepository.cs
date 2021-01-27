@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESourcing.Core.Repositories.Base
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<T> where T : class, new()
     {
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
