@@ -58,6 +58,7 @@ namespace ESourcing.UI
             #region ClienDependencies
 
             services.AddHttpClient<AuctionClient>();
+            services.AddHttpClient<ProductClient>();
 
             #endregion
         }
