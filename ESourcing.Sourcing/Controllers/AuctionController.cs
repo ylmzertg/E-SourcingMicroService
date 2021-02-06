@@ -51,24 +51,24 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Auction>> GetAuction(string id)
         {
-            var product = await _auctionRepository.GetAuction(id);
+            var auctions = await _auctionRepository.GetAuction(id);
 
-            if (product == null)
+            if (auctions == null)
             {
                 _logger.LogError($"Auction with id: {id}, hasn't been found in database.");
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(auctions);
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult<Auction>> CreateAuction([FromBody] Auction product)
+        public async Task<ActionResult<Auction>> CreateAuction([FromBody] Auction auction)
         {
-            await _auctionRepository.Create(product);
+            await _auctionRepository.Create(auction);
 
-            return CreatedAtRoute("GetAuction", new { id = product.Id }, product);
+            return CreatedAtRoute("GetAuction", new { id = auction.Id }, auction);
         }
 
         [HttpPut]
@@ -85,7 +85,7 @@ namespace ESourcing.Sourcing.Controllers
             return Ok(await _auctionRepository.Delete(id));
         }
 
-        [HttpPost("{id:length(24)}")]
+        [HttpPost("CompleteAuction/{id:length(24)}")]
         [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Auction>> CompleteAuction(string id)
