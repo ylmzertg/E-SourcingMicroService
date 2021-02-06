@@ -37,11 +37,11 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(List<Bid>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Bid>>> GetBidsByAuctionId(string id)
         {
-            List<Bid> bids = await _bidRepository.GetBidsByAuctionId(id);
+            IEnumerable<Bid> bids = await _bidRepository.GetBidsByAuctionId(id);
 
             return Ok(bids);
         }
-
+        
         [HttpGet("GetWinnerBid")]
         [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Bid>>> GetWinnerBid(string id)
