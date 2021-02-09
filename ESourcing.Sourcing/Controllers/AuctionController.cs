@@ -20,13 +20,13 @@ namespace ESourcing.Sourcing.Controllers
         private readonly IAuctionRepository _auctionRepository;
         private readonly IBidRepository _bidRepository;
         private readonly ILogger<AuctionController> _logger;
-        //private readonly EventBusRabbitMQProducer _eventBus;
+        private readonly EventBusRabbitMQProducer _eventBus;
         private readonly IMapper _mapper;
 
         public AuctionController(
             IAuctionRepository auctionRepository,
             IBidRepository bidRepository,
-            //EventBusRabbitMQProducer eventBus,
+            EventBusRabbitMQProducer eventBus,
             IMapper mapper,
             ILogger<AuctionController> logger)
         {
@@ -35,7 +35,7 @@ namespace ESourcing.Sourcing.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         [HttpGet]
@@ -117,7 +117,7 @@ namespace ESourcing.Sourcing.Controllers
 
             try
             {
-                //_eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace ESourcing.Sourcing.Controllers
 
             try
             {
-                //_eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
             }
             catch (Exception ex)
             {
