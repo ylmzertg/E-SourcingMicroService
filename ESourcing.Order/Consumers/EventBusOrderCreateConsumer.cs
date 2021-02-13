@@ -51,17 +51,17 @@ namespace ESourcing.Order.Consumers
 
         private async void ReceivedEvent(object sender, BasicDeliverEventArgs e)
         {
+            var message = Encoding.UTF8.GetString(e.Body.Span);
+            var @event = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
+
             if (e.RoutingKey == EventBusConstants.OrderCreateQueue)
             {
-                var message = Encoding.UTF8.GetString(e.Body.Span);
-                var orderCreateEvent = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
-
                 // EXECUTION : Call Internal Order Operation
-                var command = _mapper.Map<OrderCreateCommand>(orderCreateEvent);
+                var command = _mapper.Map<OrderCreateCommand>(@event);
 
                 command.CreatedAt = DateTime.Now;
-                command.TotalPrice = orderCreateEvent.Quantity * orderCreateEvent.Price;
-                command.UnitPrice = orderCreateEvent.Price;
+                command.TotalPrice = @event.Quantity * @event.Price;
+                command.UnitPrice = @event.Price;
 
                 var result = await _mediator.Send(command);
             }

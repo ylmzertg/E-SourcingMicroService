@@ -1,4 +1,4 @@
-﻿using ESourcing.Order.RabbitMQ;
+﻿using ESourcing.Order.Consumers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
