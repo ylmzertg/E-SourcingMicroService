@@ -1,43 +1,74 @@
 ﻿using EventBusRabbitMQ.Events;
+using EventBusRabbitMQ.Events.Interfaces;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 using System;
-using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 
 namespace EventBusRabbitMQ.Producer
 {
     public class EventBusRabbitMQProducer
     {
-        private readonly IRabbitMQConnection _connection;
+        private readonly IRabbitMQPersistentConnection _persistentConnection;
+        private readonly ILogger<EventBusRabbitMQProducer> _logger;
+        private readonly int _retryCount;
 
-        public EventBusRabbitMQProducer(IRabbitMQConnection connection)
+        public EventBusRabbitMQProducer(
+            IRabbitMQPersistentConnection persistentConnection,
+            ILogger<EventBusRabbitMQProducer> logger,
+            int retryCount = 5)
         {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _retryCount = retryCount;
         }
 
-        public void PublishEvent(string queueName, IEvent publishModel)
+        public void Publish(string queueName, IEvent @event)
         {
-            using (var channel = _connection.CreateModel())
+            if (!_persistentConnection.IsConnected)
+            {
+                _persistentConnection.TryConnect();
+            }
+
+            var policy = RetryPolicy.Handle<BrokerUnreachableException>()
+                .Or<SocketException>()
+                .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                {
+                    _logger.LogWarning(ex, "Could not publish event: {EventId} after {Timeout}s ({ExceptionMessage})", @event.Id, $"{time.TotalSeconds:n1}", ex.Message);
+                });
+
+            using (var channel = _persistentConnection.CreateModel())
             {
                 channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-                var message = JsonConvert.SerializeObject(publishModel);
+                var message = JsonConvert.SerializeObject(@event);
                 var body = Encoding.UTF8.GetBytes(message);
 
-                IBasicProperties properties = channel.CreateBasicProperties();
-                properties.Persistent = true;
-                properties.DeliveryMode = 2;
-
-                channel.ConfirmSelect();
-                channel.BasicPublish(exchange: "", routingKey: queueName, mandatory: true, basicProperties: properties, body: body);
-                channel.WaitForConfirmsOrDie();
-
-                channel.BasicAcks += (sender, eventArgs) =>
+                policy.Execute(() =>
                 {
-                    Console.WriteLine("Sent RabbitMQ");
-                    //implement ack handle
-                };
-                channel.ConfirmSelect();
+                    IBasicProperties properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
+                    properties.DeliveryMode = 2;
+
+                    channel.ConfirmSelect();
+                    channel.BasicPublish(
+                        exchange: "", 
+                        routingKey: queueName, 
+                        mandatory: true, 
+                        basicProperties: properties, 
+                        body: body);
+                    channel.WaitForConfirmsOrDie();
+
+                    channel.BasicAcks += (sender, eventArgs) =>
+                    {
+                        Console.WriteLine("Sent RabbitMQ");
+                        //implement ack handle
+                    };
+                });
             }
         }
     }

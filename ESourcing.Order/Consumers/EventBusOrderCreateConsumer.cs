@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ;
-using EventBusRabbitMQ.Common;
+using EventBusRabbitMQ.Core;
 using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
@@ -14,18 +14,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESourcing.Order.RabbitMQ
+namespace ESourcing.Order.Consumers
 {
     public class EventBusOrderCreateConsumer
     {
-        private readonly IRabbitMQConnection _connection;
+        private readonly IRabbitMQPersistentConnection _persistentConnection;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly IOrderRepository _repository; // we added this in order to resolve in mediatR
 
-        public EventBusOrderCreateConsumer(IRabbitMQConnection connection, IMediator mediator, IMapper mapper, IOrderRepository repository)
+        public EventBusOrderCreateConsumer(IRabbitMQPersistentConnection persistentConnection, IMediator mediator, IMapper mapper, IOrderRepository repository)
         {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -33,7 +33,12 @@ namespace ESourcing.Order.RabbitMQ
 
         public void Consume()
         {
-            var channel = _connection.CreateModel();
+            if (!_persistentConnection.IsConnected)
+            {
+                _persistentConnection.TryConnect();
+            }
+
+            var channel = _persistentConnection.CreateModel();
             channel.QueueDeclare(queue: EventBusConstants.OrderCreateQueue, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
@@ -64,7 +69,7 @@ namespace ESourcing.Order.RabbitMQ
 
         public void Disconnect()
         {
-            _connection.Dispose();
+            _persistentConnection.Dispose();
         }
     }
 }

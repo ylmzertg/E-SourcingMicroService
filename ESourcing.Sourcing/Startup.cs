@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
@@ -62,8 +63,10 @@ namespace ESourcing.Sourcing
 
             #region RabbitMQ Dependencies
 
-            services.AddSingleton<IRabbitMQConnection>(sp =>
+            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
             {
+                var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
+
                 var factory = new ConnectionFactory()
                 {
                     HostName = Configuration["EventBus:HostName"]
@@ -79,7 +82,13 @@ namespace ESourcing.Sourcing
                     factory.Password = Configuration["EventBus:Password"];
                 }
 
-                return new RabbitMQConnection(factory);
+                var retryCount = 5;
+                if (!string.IsNullOrEmpty(Configuration["EventBus:RetryCount"]))
+                {
+                    retryCount = int.Parse(Configuration["EventBus:RetryCount"]);
+                }
+
+                return new DefaultRabbitMQPersistentConnection(factory, logger, retryCount);
             });
 
             services.AddSingleton<EventBusRabbitMQProducer>();
