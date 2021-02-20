@@ -102,7 +102,7 @@ namespace EventBusRabbitMQ
             }
             catch (IOException ex)
             {
-                Console.WriteLine(ex.ToString());
+                _logger.LogCritical(ex.ToString());
             }
         }
 
