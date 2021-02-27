@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Application", "Order.Application\Ordering.Application.csproj", "{3CC9DCD6-F906-45B8-8026-A5162E69BEAC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Core", "Order.Core\Ordering.Core.csproj", "{2425D814-202D-47EC-B5D4-B2D40D3AB7F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Domain", "Order.Core\Ordering.Domain.csproj", "{2425D814-202D-47EC-B5D4-B2D40D3AB7F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3B7A26E7-6690-463C-874D-DC60E7606063}"
 EndProject

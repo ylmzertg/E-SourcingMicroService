@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
     <ProjectReference Include="..\Order.Application\Ordering.Application.csproj" />
-    <ProjectReference Include="..\Order.Core\Ordering.Core.csproj" />
+    <ProjectReference Include="..\Order.Core\Ordering.Domain.csproj" />
     <ProjectReference Include="..\Order.Infrastructure\Ordering.Infrastructure.csproj" />
   </ItemGroup>
 

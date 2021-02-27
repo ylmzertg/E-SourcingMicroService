@@ -2,7 +2,7 @@
 using EventBusRabbitMQ.Events;
 using Ordering.Application.Commands;
 using Ordering.Application.Responses;
-using Ordering.Core.Entities;
+using Ordering.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

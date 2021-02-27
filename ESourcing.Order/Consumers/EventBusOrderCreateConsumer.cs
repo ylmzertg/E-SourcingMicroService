@@ -5,7 +5,7 @@ using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
 using Ordering.Application.Commands;
-using Ordering.Core.Repositories;
+using Ordering.Domain.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;

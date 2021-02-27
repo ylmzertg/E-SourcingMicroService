@@ -2,8 +2,8 @@
 using Ordering.Application.Commands;
 using Ordering.Application.Mapper;
 using Ordering.Application.Responses;
-using Ordering.Core.Entities;
-using Ordering.Core.Repositories;
+using Ordering.Domain.Entities;
+using Ordering.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

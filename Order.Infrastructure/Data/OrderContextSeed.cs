@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Ordering.Core.Entities;
+using Ordering.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
