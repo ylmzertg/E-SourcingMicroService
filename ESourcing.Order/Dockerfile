@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
 COPY ["ESourcing.Order/ESourcing.Order.csproj", "ESourcing.Order/"]
 COPY ["Order.Infrastructure/Ordering.Infrastructure.csproj", "Order.Infrastructure/"]
-COPY ["Order.Core/Ordering.Core.csproj", "Order.Core/"]
+COPY ["Order.Core/Ordering.Domain.csproj", "Order.Core/"]
 COPY ["Order.Application/Ordering.Application.csproj", "Order.Application/"]
 COPY ["EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
 RUN dotnet restore "ESourcing.Order/ESourcing.Order.csproj"

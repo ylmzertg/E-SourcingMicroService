@@ -6,11 +6,6 @@ using Ordering.Domain.Repositories.Base;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Repository;
 using Ordering.Infrastructure.Repository.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure
 {
@@ -21,9 +16,9 @@ namespace Ordering.Infrastructure
             services.AddDbContext<OrderContext>(options =>
                     options.UseSqlServer(
                         configuration.GetConnectionString("OrderConnection"),
-                        b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName)));
+                        b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName)), ServiceLifetime.Singleton);
 
-            services.AddScoped(provider => provider.GetService<OrderContext>());
+            //services.AddSingleton(provider => provider.GetService<OrderContext>());
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));

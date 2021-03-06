@@ -4,15 +4,12 @@ using EventBusRabbitMQ.Core;
 using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
-using Ordering.Application.Commands;
+using Ordering.Application.Commands.OrderCreate;
 using Ordering.Domain.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ESourcing.Order.Consumers
 {
@@ -56,7 +53,6 @@ namespace ESourcing.Order.Consumers
 
             if (e.RoutingKey == EventBusConstants.OrderCreateQueue)
             {
-                // EXECUTION : Call Internal Order Operation
                 var command = _mapper.Map<OrderCreateCommand>(@event);
 
                 command.CreatedAt = DateTime.Now;

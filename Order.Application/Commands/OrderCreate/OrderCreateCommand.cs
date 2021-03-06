@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.Application.Commands
+namespace Ordering.Application.Commands.OrderCreate
 {
     public class OrderCreateCommand : IRequest<OrderResponse>
     {
@@ -17,5 +17,4 @@ namespace Ordering.Application.Commands
         public decimal TotalPrice { get; set; }
         public DateTime CreatedAt { get; set; }
     }
-
 }

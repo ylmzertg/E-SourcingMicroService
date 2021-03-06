@@ -1,6 +1,7 @@
 using ESourcing.Order.Consumers;
 using ESourcing.Order.Extensions;
 using EventBusRabbitMQ;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +10,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Ordering.Application;
+using Ordering.Application.Handlers;
 using Ordering.Infrastructure;
 using RabbitMQ.Client;
+using System.Reflection;
 
 namespace ESourcing.Order
 {
@@ -61,7 +64,6 @@ namespace ESourcing.Order
             //services.AddMediatR(typeof(OrderCreateHandler).GetTypeInfo().Assembly);
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
-
 
             #endregion
 
