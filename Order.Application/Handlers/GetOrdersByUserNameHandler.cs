@@ -5,8 +5,6 @@ using Ordering.Application.Responses;
 using Ordering.Domain.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +21,7 @@ namespace Ordering.Application.Handlers
 
         public async Task<IEnumerable<OrderResponse>> Handle(GetOrdersBySellerUserNameQuery request, CancellationToken cancellationToken)
         {
-            var orderList = await _orderRepository.GetAsync(o => o.SellerUserName == request.UserName);
+            var orderList = await _orderRepository.GetOrdersBySellerUserName(request.UserName);
 
             var response = OrderMapper.Mapper.Map<IEnumerable<OrderResponse>>(orderList);
 
