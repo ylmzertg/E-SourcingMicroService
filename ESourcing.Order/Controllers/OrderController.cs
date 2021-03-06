@@ -25,7 +25,7 @@ namespace ESourcing.Order.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet]
+        [HttpGet("userName", Name = "[auction]")]
         [ProducesResponseType(typeof(IEnumerable<OrderResponse>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersByUserName(string userName)
         {

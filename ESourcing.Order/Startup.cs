@@ -1,25 +1,16 @@
-using AutoMapper;
 using ESourcing.Order.Consumers;
 using ESourcing.Order.Extensions;
 using EventBusRabbitMQ;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Ordering.Application.Handlers;
-using Ordering.Application.PipelineBehaviours;
-using Ordering.Domain.Repositories;
-using Ordering.Domain.Repositories.Base;
-using Ordering.Infrastructure.Data;
-using Ordering.Infrastructure.Repository;
-using Ordering.Infrastructure.Repository.Base;
+using Ordering.Application;
+using Ordering.Infrastructure;
 using RabbitMQ.Client;
-using System.Reflection;
 
 namespace ESourcing.Order
 {
@@ -37,33 +28,40 @@ namespace ESourcing.Order
         {
             services.AddControllers();
 
+            #region Add Infrastructure
+
+            services.AddInfrastructure(Configuration);
+
+            #endregion
+
+            #region Add Application
+
+            services.AddApplication();
+
+            #endregion
+
             #region SqlServer Dependencies
 
-            ////// use in-memory database
-            ////services.AddDbContext<OrderContext>(c =>
-            ////    c.UseInMemoryDatabase("OrderConnection"));
-
-            //// use real database
-            services.AddDbContext<OrderContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("OrderConnection")), ServiceLifetime.Singleton); // we made singleton this in order to resolve in mediatR when consuming Rabbit
+            //services.AddDbContext<OrderContext>(c =>
+            //    c.UseSqlServer(Configuration.GetConnectionString("OrderConnection")), ServiceLifetime.Singleton); // we made singleton this in order to resolve in mediatR when consuming Rabbit
 
             #endregion
 
             #region Project Dependencies
 
-            // Add Infrastructure Layer
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
-            services.AddTransient<IOrderRepository, OrderRepository>(); // we made transient this in order to resolve in mediatR when consuming Rabbit
+            //// Add Infrastructure Layer
+            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            //services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+            //services.AddTransient<IOrderRepository, OrderRepository>(); // we made transient this in order to resolve in mediatR when consuming Rabbit
 
-            // Add AutoMapper
-            services.AddAutoMapper(typeof(Startup));
+            //// Add AutoMapper
+            //services.AddAutoMapper(typeof(Startup));
 
-            // Add MediatR
-            services.AddMediatR(typeof(OrderCreateHandler).GetTypeInfo().Assembly);
+            //// Add MediatR
+            //services.AddMediatR(typeof(OrderCreateHandler).GetTypeInfo().Assembly);
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
-            //Domain Level Validation
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             #endregion
 
