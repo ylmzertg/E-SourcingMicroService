@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ.Events;
-using Ordering.Application.Commands;
+using Ordering.Application.Commands.OrderCreate;
 using Ordering.Application.Responses;
-using Ordering.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Ordering.Domain.Entities;
 
 namespace Ordering.Application.Mapper
 {

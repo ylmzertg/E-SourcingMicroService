@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ordering.Core.Entities;
-using Ordering.Core.Repositories;
+using Ordering.Domain.Entities;
+using Ordering.Domain.Repositories;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Repository.Base;
 using System;

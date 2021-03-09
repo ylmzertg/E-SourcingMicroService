@@ -130,13 +130,13 @@ namespace ESourcing.Sourcing.Controllers
         }
 
         [HttpPost("TestEvent")]
-        public ActionResult<Auction> TestEvent(string id)
+        public ActionResult<OrderCreateEvent> TestEvent()
         {
             OrderCreateEvent eventMessage = new OrderCreateEvent();
-            eventMessage.AuctionId = "600a800fee404a87fb9f148e";
-            eventMessage.ProductId = "600a800fee404a87fb9f148e";
-            eventMessage.Price = 11;
-            eventMessage.Quantity = 13;
+            eventMessage.AuctionId = "dummy1";
+            eventMessage.ProductId = "dummy_product_1";
+            eventMessage.Price = 10;
+            eventMessage.Quantity = 100;
             eventMessage.SellerUserName = "test@test.com";
 
             try
@@ -149,7 +149,7 @@ namespace ESourcing.Sourcing.Controllers
                 throw;
             }
 
-            return Accepted();
+            return Accepted(eventMessage);
         }
     }
 }

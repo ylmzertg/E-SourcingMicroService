@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ.Events;
-using Ordering.Application.Commands;
+using Ordering.Application.Commands.OrderCreate;
 
 namespace ESourcing.Order.Mapping
 {

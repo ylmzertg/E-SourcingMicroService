@@ -1,9 +1,9 @@
-﻿using Ordering.Core.Entities.Base;
+﻿using Ordering.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ordering.Core.Entities
+namespace Ordering.Domain.Entities
 {
     public class Order : Entity
     {
