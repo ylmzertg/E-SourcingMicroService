@@ -16,7 +16,7 @@ namespace ESourcing.UI.Clients
         public AuctionClient(HttpClient client)
         {
             _client = client;
-            _client.BaseAddress = new Uri(CommonInfo.LocalAuctionBaseAddress);
+            _client.BaseAddress = new Uri("http://localhost:59956");
         }
 
         public async Task<Result<List<AuctionViewModel>>> GetAuctions()
@@ -50,6 +50,21 @@ namespace ESourcing.UI.Clients
                     return new Result<AuctionViewModel>(false, ResultConstant.RecordCreateNotSuccessfully);
             }
             return new Result<AuctionViewModel>(false, ResultConstant.RecordCreateNotSuccessfully);
+        }
+
+        public async Task<Result<AuctionViewModel>> GetAuctionById(string id)
+        {
+            //List<AuctionViewModel> returnData = new List<AuctionViewModel>();
+            var response = await _client.GetAsync("/api/v1/Auction/" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<AuctionViewModel>(responseData);
+                if (result != null)
+                    return new Result<AuctionViewModel>(true, ResultConstant.RecordFound, result);
+                return new Result<AuctionViewModel>(false, ResultConstant.RecordNotFound);
+            }
+            return new Result<AuctionViewModel>(false, ResultConstant.RecordNotFound);
         }
     }
 }
