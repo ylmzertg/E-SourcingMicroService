@@ -16,7 +16,7 @@ namespace ESourcing.UI.Clients
         public BidClient(HttpClient client)
         {
             _client = client;
-            _client.BaseAddress = new Uri("http://localhost:59956");
+            _client.BaseAddress = new Uri(CommonInfo.LocalAuctionBaseAddress);
         }
 
         public async Task<Result<List<BidViewModel>>> GetBidsByAuctionId(string id)
