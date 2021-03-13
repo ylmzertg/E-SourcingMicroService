@@ -14,9 +14,9 @@ namespace Ordering.Infrastructure.Repository.Base
     {
         protected readonly OrderContext _dbContext;
 
-        public Repository(OrderContext dbContext)
+        public Repository(OrderContext context)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

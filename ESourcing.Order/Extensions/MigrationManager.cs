@@ -13,20 +13,22 @@ namespace ESourcing.Order.Extensions
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var orderContext = scope.ServiceProvider.GetRequiredService<OrderContext>())
+                try
                 {
-                    try
+                    var orderContext = scope.ServiceProvider.GetRequiredService<OrderContext>();
+
+                    if (orderContext.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
                     {
                         orderContext.Database.Migrate();
+                    }
 
-                        OrderContextSeed.SeedAsync(orderContext)
-                            .Wait();
-                    }
-                    catch (Exception ex)
-                    {
-                        //Log errors or do anything you think it's needed
-                        throw;
-                    }
+                    OrderContextSeed.SeedAsync(orderContext)
+                        .Wait();
+                }
+                catch (Exception ex)
+                {
+                    //Log errors or do anything you think it's needed
+                    throw;
                 }
             }
             return host;
