@@ -39,10 +39,9 @@ namespace ESourcing.Order.Controllers
             return Ok(orders);
         }
 
-        //For Testing
         [HttpPost]
         [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> OrderCreate([FromBody] OrderCreateCommand command)
+        public async Task<ActionResult> OrderCreate([FromBody] OrderCreateCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
