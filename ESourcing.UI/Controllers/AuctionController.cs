@@ -52,6 +52,7 @@ namespace ESourcing.UI.Controllers
         {
             model.Status = 1;
             model.CreatedAt = DateTime.Now;
+            //model.IncludedSellers = model.SellerId;
             var createAuction = await _auctionClient.CreateAuction(model);
             if (createAuction.IsSuccess)
                 return RedirectToAction("Index");
