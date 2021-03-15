@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventBusRabbitMQ.Events.Interfaces;
+using System;
 
 namespace EventBusRabbitMQ.Events
 {

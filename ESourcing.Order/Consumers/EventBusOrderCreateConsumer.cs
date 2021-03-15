@@ -1,31 +1,28 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ;
-using EventBusRabbitMQ.Common;
+using EventBusRabbitMQ.Core;
 using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
-using Ordering.Application.Commands;
-using Ordering.Core.Repositories;
+using Ordering.Application.Commands.OrderCreate;
+using Ordering.Domain.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ESourcing.Order.RabbitMQ
+namespace ESourcing.Order.Consumers
 {
     public class EventBusOrderCreateConsumer
     {
-        private readonly IRabbitMQConnection _connection;
+        private readonly IRabbitMQPersistentConnection _persistentConnection;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly IOrderRepository _repository; // we added this in order to resolve in mediatR
 
-        public EventBusOrderCreateConsumer(IRabbitMQConnection connection, IMediator mediator, IMapper mapper, IOrderRepository repository)
+        public EventBusOrderCreateConsumer(IRabbitMQPersistentConnection persistentConnection, IMediator mediator, IMapper mapper, IOrderRepository repository)
         {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -33,7 +30,12 @@ namespace ESourcing.Order.RabbitMQ
 
         public void Consume()
         {
-            var channel = _connection.CreateModel();
+            if (!_persistentConnection.IsConnected)
+            {
+                _persistentConnection.TryConnect();
+            }
+
+            var channel = _persistentConnection.CreateModel();
             channel.QueueDeclare(queue: EventBusConstants.OrderCreateQueue, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
@@ -46,17 +48,16 @@ namespace ESourcing.Order.RabbitMQ
 
         private async void ReceivedEvent(object sender, BasicDeliverEventArgs e)
         {
+            var message = Encoding.UTF8.GetString(e.Body.Span);
+            var @event = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
+
             if (e.RoutingKey == EventBusConstants.OrderCreateQueue)
             {
-                var message = Encoding.UTF8.GetString(e.Body.Span);
-                var orderCreateEvent = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
-
-                // EXECUTION : Call Internal Order Operation
-                var command = _mapper.Map<OrderCreateCommand>(orderCreateEvent);
+                var command = _mapper.Map<OrderCreateCommand>(@event);
 
                 command.CreatedAt = DateTime.Now;
-                command.TotalPrice = orderCreateEvent.Quantity * orderCreateEvent.Price;
-                command.UnitPrice = orderCreateEvent.Price;
+                command.TotalPrice = @event.Quantity * @event.Price;
+                command.UnitPrice = @event.Price;
 
                 var result = await _mediator.Send(command);
             }
@@ -64,7 +65,7 @@ namespace ESourcing.Order.RabbitMQ
 
         public void Disconnect()
         {
-            _connection.Dispose();
+            _persistentConnection.Dispose();
         }
     }
 }

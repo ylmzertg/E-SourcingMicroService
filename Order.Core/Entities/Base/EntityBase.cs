@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Ordering.Core.Entities.Base
+namespace Ordering.Domain.Entities.Base
 {
     public abstract class EntityBase : IEntityBase
     {

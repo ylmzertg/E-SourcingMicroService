@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ordering.Application.Commands;
+using Ordering.Application.Commands.OrderCreate;
 using Ordering.Application.Queries;
 using Ordering.Application.Responses;
 using System;
@@ -25,19 +25,23 @@ namespace ESourcing.Order.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet]
+        [HttpGet("GetOrdersByUserName/{userName}")]
         [ProducesResponseType(typeof(IEnumerable<OrderResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersByUserName(string userName)
         {
             var query = new GetOrdersBySellerUserNameQuery(userName);
+
             var orders = await _mediator.Send(query);
+            if (orders.Count() == decimal.Zero)
+                return NotFound();
+
             return Ok(orders);
         }
 
-        //For Testing
         [HttpPost]
         [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> OrderCreate([FromBody] OrderCreateCommand command)
+        public async Task<ActionResult> OrderCreate([FromBody] OrderCreateCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

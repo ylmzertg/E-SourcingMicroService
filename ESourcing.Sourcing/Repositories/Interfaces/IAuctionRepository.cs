@@ -10,7 +10,7 @@ namespace ESourcing.Sourcing.Repositories.Interfaces
     {
         Task<IEnumerable<Auction>> GetAuctions();
         Task<Auction> GetAuction(string id);
-        Task<IEnumerable<Auction>> GetAuctionByName(string name);
+        Task<Auction> GetAuctionByName(string name);
 
         Task Create(Auction product);
         Task<bool> Update(Auction product);

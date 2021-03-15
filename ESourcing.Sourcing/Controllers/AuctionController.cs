@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ESourcing.Sourcing.Entities;
 using ESourcing.Sourcing.Repositories.Interfaces;
-using EventBusRabbitMQ.Common;
+using EventBusRabbitMQ.Core;
 using EventBusRabbitMQ.Events;
 using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Mvc;
@@ -51,24 +51,24 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Auction>> GetAuction(string id)
         {
-            var product = await _auctionRepository.GetAuction(id);
+            var auctions = await _auctionRepository.GetAuction(id);
 
-            if (product == null)
+            if (auctions == null)
             {
                 _logger.LogError($"Auction with id: {id}, hasn't been found in database.");
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(auctions);
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult<Auction>> CreateAuction([FromBody] Auction product)
+        public async Task<ActionResult<Auction>> CreateAuction([FromBody] Auction auction)
         {
-            await _auctionRepository.Create(product);
+            await _auctionRepository.Create(auction);
 
-            return CreatedAtRoute("GetAuction", new { id = product.Id }, product);
+            return CreatedAtRoute("GetAuction", new { id = auction.Id }, auction);
         }
 
         [HttpPut]
@@ -85,10 +85,11 @@ namespace ESourcing.Sourcing.Controllers
             return Ok(await _auctionRepository.Delete(id));
         }
 
-        [HttpPost("{id:length(24)}")]
-        [ProducesResponseType(typeof(Bid), (int)HttpStatusCode.Accepted)]
+        [HttpPost("CompleteAuction/{id:length(24)}")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<Auction>> CompleteAuction(string id)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> CompleteAuction(string id)
         {
             Auction auction = await _auctionRepository.GetAuction(id);
             if(auction == null)
@@ -117,11 +118,11 @@ namespace ESourcing.Sourcing.Controllers
 
             try
             {
-                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+                _eventBus.Publish(EventBusConstants.OrderCreateQueue, eventMessage);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.RequestId, "Sourcing");
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.Id, "Sourcing");
                 throw;
             }
 
@@ -129,26 +130,26 @@ namespace ESourcing.Sourcing.Controllers
         }
 
         [HttpPost("TestEvent")]
-        public ActionResult<Auction> TestEvent(string id)
+        public ActionResult<OrderCreateEvent> TestEvent()
         {
             OrderCreateEvent eventMessage = new OrderCreateEvent();
-            eventMessage.AuctionId = "600a800fee404a87fb9f148e";
-            eventMessage.ProductId = "600a800fee404a87fb9f148e";
-            eventMessage.Price = 11;
-            eventMessage.Quantity = 13;
+            eventMessage.AuctionId = "dummy1";
+            eventMessage.ProductId = "dummy_product_1";
+            eventMessage.Price = 10;
+            eventMessage.Quantity = 100;
             eventMessage.SellerUserName = "test@test.com";
 
             try
             {
-                _eventBus.PublishEvent(EventBusConstants.OrderCreateQueue, eventMessage);
+                _eventBus.Publish(EventBusConstants.OrderCreateQueue, eventMessage);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.RequestId, "Sourcing");
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.Id, "Sourcing");
                 throw;
             }
 
-            return Accepted();
+            return Accepted(eventMessage);
         }
     }
 }

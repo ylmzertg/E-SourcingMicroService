@@ -46,14 +46,14 @@ namespace ESourcing.Sourcing.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Auction>> GetAuctionByName(string name)
+        public async Task<Auction> GetAuctionByName(string name)
         {
             FilterDefinition<Auction> filter = Builders<Auction>.Filter.ElemMatch(p => p.Name, name);
 
             return await _context
                           .Auctions
                           .Find(filter)
-                          .ToListAsync();
+                          .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Auction>> GetAuctions()

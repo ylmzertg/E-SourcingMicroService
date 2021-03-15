@@ -1,8 +1,19 @@
-﻿
+﻿@model AuctionBidsViewModel
 @{
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .scrollbar {
+        position: relative;
+        height: 600px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
 <div class="row">
     <div class="col-md-6">
         <div class="card card-primary">
@@ -17,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="sendButton" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -26,28 +37,36 @@
         <div class="card-header" style="background-color:darkgray">
             <h3 class="card-title">Active RFQ Detail</h3>
         </div>
+        <input id="AuctionId" type="hidden" value="@Model.AuctionId" />
+        <input id="ProductId" type="hidden" value="@Model.ProductId" />
+        <input id="SellerUsername" type="hidden" value="@Model.SellerUserName" />
         <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example2" class="table table-bordered table-hover">
+        <div class="card-body table-wrapper-scroll-y scrollbar">
+            <table id="bidList" class="table table-bordered table-hover">
                 <thead>
                     <tr style="background-color: darkgray">
                         <th>RFQ UserName</th>
                         <th>Price</th>
-                        <th>Quantity</th>
-
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Hasan Denli</td>
-                        <td>
-                            10 $
-                        </td>
-                        <td>2</td>
-                    </tr>
+                <tbody class="bidLine">
+                    @if (Model.Bids != null)
+                    {
+                        foreach (var bid in Model.Bids)
+                        {
+                            <tr>
+                                <td>@bid.SellerUserName</td>
+                                <td>
+                                    @bid.Price
+                                </td>
+                            </tr>
+                        }
+                    }
 
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/Views/RFQ/detail.js"></script>

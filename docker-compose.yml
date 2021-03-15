@@ -5,7 +5,7 @@ services:
     image: mongo
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3-management
 
   sourcingsqldb:
     image: mcr.microsoft.com/mssql/server

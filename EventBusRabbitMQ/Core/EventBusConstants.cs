@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventBusRabbitMQ.Common
+namespace EventBusRabbitMQ.Core
 {
     public static class EventBusConstants
     {
