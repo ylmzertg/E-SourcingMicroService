@@ -8,6 +8,6 @@ namespace ESourcing.Core.Entities
         public string LastName { get; set; }
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
-        public bool IsSupplier { get; set; }
+        public bool IsSeller { get; set; }
     }
 }

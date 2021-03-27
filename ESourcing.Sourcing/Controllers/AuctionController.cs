@@ -94,7 +94,7 @@ namespace ESourcing.Sourcing.Controllers
             Auction auction = await _auctionRepository.GetAuction(id);
             if(auction == null)
                 return NotFound();
-
+             
             if(auction.Status != (int)Status.Active)
             {
                 _logger.LogError("Auction can not completed");

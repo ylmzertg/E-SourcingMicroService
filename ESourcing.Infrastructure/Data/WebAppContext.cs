@@ -21,9 +21,9 @@ namespace ESourcing.Infrastructure.Data
                 .Property(e => e.IsAdmin)
                 .HasDefaultValue(false);
 
-            builder.Entity<Employee>()
-                .Property(e => e.IsSupplier)
-                .HasDefaultValue(false);
+            //builder.Entity<Employee>()
+            //    .Property(e => e.IsSupplier)
+            //    .HasDefaultValue(false);
 
             base.OnModelCreating(builder);
         }

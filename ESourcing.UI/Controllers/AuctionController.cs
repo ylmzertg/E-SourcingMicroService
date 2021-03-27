@@ -27,6 +27,7 @@ namespace ESourcing.UI.Controllers
                 ViewBag.ProductList = productList.Data;
             var userList = await _userRepository.GetAllAsync();
             ViewBag.UserList = userList;
+
             var auctionList = await _auctionClient.GetAuctions();
             if (auctionList.IsSuccess)
                 return View(auctionList.Data);
