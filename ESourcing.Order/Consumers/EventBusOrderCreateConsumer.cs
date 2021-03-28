@@ -18,14 +18,12 @@ namespace ESourcing.Order.Consumers
         private readonly IRabbitMQPersistentConnection _persistentConnection;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IOrderRepository _repository; // we added this in order to resolve in mediatR
 
         public EventBusOrderCreateConsumer(IRabbitMQPersistentConnection persistentConnection, IMediator mediator, IMapper mapper, IOrderRepository repository)
         {
             _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public void Consume()
