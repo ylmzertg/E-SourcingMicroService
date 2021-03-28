@@ -44,7 +44,14 @@ namespace ESourcing.Infrastructure.Data
         {
             return new List<Employee>()
             {
-
+               new Employee
+               {
+                   FirstName ="User1",
+                   LastName="UserLastName1",
+                   IsActive = true,
+                   IsAdmin =false,
+                   IsSeller = true
+               }
             };
         }
     }

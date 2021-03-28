@@ -27,6 +27,7 @@ namespace ESourcing.UI.Controllers
                 ViewBag.ProductList = productList.Data;
             var userList = await _userRepository.GetAllAsync();
             ViewBag.UserList = userList;
+
             var auctionList = await _auctionClient.GetAuctions();
             if (auctionList.IsSuccess)
                 return View(auctionList.Data);
@@ -52,6 +53,7 @@ namespace ESourcing.UI.Controllers
         {
             model.Status = 1;
             model.CreatedAt = DateTime.Now;
+            //model.IncludedSellers = model.SellerId;
             var createAuction = await _auctionClient.CreateAuction(model);
             if (createAuction.IsSuccess)
                 return RedirectToAction("Index");

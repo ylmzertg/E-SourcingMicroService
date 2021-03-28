@@ -4,8 +4,6 @@ using ESourcing.Core.Repositories.Base;
 using ESourcing.Infrastructure.Data;
 using ESourcing.Infrastructure.Repository;
 using ESourcing.Infrastructure.Repository.Base;
-using ESourcing.UI.ApiExtension;
-using ESourcing.UI.ApiExtension.Interfaces;
 using ESourcing.UI.Clients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
